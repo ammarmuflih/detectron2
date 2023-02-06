@@ -1,16 +1,21 @@
 MODEL:
   META_ARCHITECTURE: "GeneralizedRCNN"
+  MASK_ON: False
+  WEIGHTS: "https://github.com/lukemelas/EfficientNet-PyTorch/releases/download/1.0/efficientnet-b0-355c32eb.pth"
   BACKBONE:
-    NAME: "build_resnet_fpn_backbone"
-  RESNETS:
-    OUT_FEATURES: ["res2", "res3", "res4", "res5"]
+    NAME: "build_efficientnet_fpn_backbone"
+    FREEZE_AT: 0
+  EFFICIENTNET:
+    NAME: "efficientnet_b0" # efficientnet_b1, efficientnet_2,  ..., efficientnet_b7
+    FEATURE_INDICES: [1, 4, 10, 15]
+    OUT_FEATURES: ["stride4", "stride8", "stride16", "stride32"]
   FPN:
-    IN_FEATURES: ["res2", "res3", "res4", "res5"]
+    IN_FEATURES: ["stride4", "stride8", "stride16", "stride32"]
   ANCHOR_GENERATOR:
     SIZES: [[32], [64], [128], [256], [512]]  # One size for each in feature map
     ASPECT_RATIOS: [[0.5, 1.0, 2.0]]  # Three aspect ratios (same for all in feature maps)
   RPN:
-    IN_FEATURES: ["p3", "p4", "p5", "p6"]
+    IN_FEATURES: ["p2", "p3", "p4", "p5", "p6"]
     PRE_NMS_TOPK_TRAIN: 2000  # Per FPN level
     PRE_NMS_TOPK_TEST: 1000  # Per FPN level
     # Detectron1 uses 2000 proposals per-batch,
@@ -20,7 +25,7 @@ MODEL:
     POST_NMS_TOPK_TEST: 1000
   ROI_HEADS:
     NAME: "StandardROIHeads"
-    IN_FEATURES: ["p3", "p4", "p5"]
+    IN_FEATURES: ["p2", "p3", "p4", "p5"]
   ROI_BOX_HEAD:
     NAME: "FastRCNNConvFCHead"
     NUM_FC: 2
