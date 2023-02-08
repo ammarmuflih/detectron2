@@ -1,12 +1,12 @@
 MODEL:
   META_ARCHITECTURE: "GeneralizedRCNN"
   MASK_ON: False
-  WEIGHTS: "https://github.com/lukemelas/EfficientNet-PyTorch/releases/download/1.0/efficientnet-b0-355c32eb.pth"
+  WEIGHTS: "https://github.com/lukemelas/EfficientNet-PyTorch/releases/download/1.0/efficientnet-b3-5fb5a3c3.pth"
   BACKBONE:
     NAME: "build_efficientnet_fpn_backbone"
     FREEZE_AT: 0
   EFFICIENTNET:
-    NAME: "efficientnet_b0" # efficientnet_b1, efficientnet_2,  ..., efficientnet_b7
+    NAME: "efficientnet_b3" # efficientnet_b1, efficientnet_2,  ..., efficientnet_b7
     FEATURE_INDICES: [1, 4, 10, 15]
     OUT_FEATURES: ["stride4", "stride8", "stride16", "stride32"]
   FPN:
