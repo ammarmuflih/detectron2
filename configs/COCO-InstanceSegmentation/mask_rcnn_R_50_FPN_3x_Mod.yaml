@@ -1,1 +1,1 @@
-_BASE_: "../Base_RCNN_FPN_Mod.yaml"
+_BASE_: "../Base-EfficientNet-FPN.yaml"
