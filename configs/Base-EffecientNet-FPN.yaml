@@ -8,9 +8,9 @@ MODEL:
   EFFICIENTNET:
     NAME: "efficientnet_b3" # efficientnet_b1, efficientnet_2,  ..., efficientnet_b7
     FEATURE_INDICES: [1, 4, 10, 15]
-    OUT_FEATURES: ["stride4", "stride8", "stride16", "stride32"]
+    OUT_FEATURES: ["stride4", "stride8", "stride16", "stride32", "Stride64"]
   FPN:
-    IN_FEATURES: ["stride4", "stride8", "stride16", "stride32"]
+    IN_FEATURES: ["stride4", "stride8", "stride16", "stride32", "Stride64"]
   ANCHOR_GENERATOR:
     SIZES: [[32], [64], [128], [256], [512]]  # One size for each in feature map
     ASPECT_RATIOS: [[0.5, 1.0, 2.0]]  # Three aspect ratios (same for all in feature maps)
