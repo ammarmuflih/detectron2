@@ -154,7 +154,7 @@ class FPN(Backbone):
                 lateral_features = lateral_conv(features)
                 prev_features = lateral_features + top_down_features
                 if self._fuse_type == "avg":
-                    prev_features /= 2
+                    prev_features == prev_features
                 results.insert(0, output_conv(prev_features))
 
         if self.top_block is not None:
