@@ -1,6 +1,6 @@
 MODEL:
   META_ARCHITECTURE: "GeneralizedRCNN"
-  MASK_ON: False
+  MASK_ON: True
   WEIGHTS: "https://github.com/lukemelas/EfficientNet-PyTorch/releases/download/1.0/efficientnet-b0-355c32eb.pth"
   BACKBONE:
     NAME: "build_efficientnet_fpn_backbone"
