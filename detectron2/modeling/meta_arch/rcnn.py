@@ -229,7 +229,7 @@ class GeneralizedRCNN(nn.Module):
         images = ImageList.from_tensors(
             images,
             self.backbone.size_divisibility,
-            # padding_constraints=self.backbone.padding_constraints,
+            padding_constraints=self.backbone.padding_constraints,
         )
         return images
 
@@ -311,7 +311,7 @@ class ProposalNetwork(nn.Module):
         images = ImageList.from_tensors(
             images,
             self.backbone.size_divisibility,
-            # padding_constraints=self.backbone.padding_constraints,
+            padding_constraints=self.backbone.padding_constraints,
         )
         features = self.backbone(images.tensor)
 
