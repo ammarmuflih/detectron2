@@ -1,12 +1,9 @@
 MODEL:
   META_ARCHITECTURE: "GeneralizedRCNN"
   MASK_ON: True
-  WEIGHTS: "https://github.com/lukemelas/EfficientNet-PyTorch/releases/download/1.0/efficientnet-b0-355c32eb.pth"
-  BACKBONE:
-    NAME: "build_efficientnet_fpn_backbone"
-    FREEZE_AT: 0
+  WEIGHTS: "/home/ammar/detectron2/efficientnet_b6_detectron2.pth"
   EFFICIENTNET:
-    NAME: "efficientnet_b6" # efficientnet_b1, efficientnet_2,  ..., efficientnet_b7
+    NAME: "efficientnet-b6"
     FEATURE_INDICES: [1, 4, 10, 15]
     OUT_FEATURES: ["stride4", "stride8", "stride16", "stride32"]
   FPN:
@@ -45,3 +42,6 @@ SOLVER:
 INPUT:
   MIN_SIZE_TRAIN: (640, 672, 704, 736, 768, 800)
 VERSION: 2
+
+    
+  
