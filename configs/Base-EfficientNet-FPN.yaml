@@ -1,15 +1,14 @@
 MODEL:
   META_ARCHITECTURE: "GeneralizedRCNN"
-  MASK_ON: True
-  #WEIGHTS: "https://github.com/lukemelas/EfficientNet-PyTorch/releases/download/1.0/efficientnet-b0-355c32eb.pth"
-  BACKBONE:
-    NAME: "build_retinanet_efficientnet_bifpn_backbone"
-  WEIGHTS: "/home/b0_detectron2.pth"
   MASK_ON: False
-  EfficientNet:
-    VERSION: 0
-    NORM: 'BN'
-    FREEZE_AT: -1
+  WEIGHTS: "https://github.com/lukemelas/EfficientNet-PyTorch/releases/download/1.0/efficientnet-b0-355c32eb.pth"
+  BACKBONE:
+    NAME: "build_efficientnet_fpn_backbone"
+    FREEZE_AT: 0
+  EFFICIENTNET:
+    NAME: "efficientnet_b0" # efficientnet_b1, efficientnet_2,  ..., efficientnet_b7
+    FEATURE_INDICES: [1, 4, 10, 15]
+    OUT_FEATURES: ["stride4", "stride8", "stride16", "stride32"]
   FPN:
     IN_FEATURES: ["stride4", "stride8", "stride16", "stride32"]
   ANCHOR_GENERATOR:
