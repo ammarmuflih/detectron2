@@ -1,0 +1,74 @@
+INPUT:
+  MASK_FORMAT: "bitmask"
+  MIN_SIZE_TRAIN: (640, 672, 704, 736, 768, 800)
+  CROP:
+    ENABLED: False
+    TYPE: "relative_range"
+    SIZE: [0.85, 0.85]
+MODEL:
+  META_ARCHITECTURE: "GeneralizedRCNN"
+  BACKBONE:
+    FREEZE_AT: 0
+    NAME: "build_effnet_fpn_backbone"
+  FPN:
+    IN_FEATURES: ["s2", "s3", "s5", "s6"]
+  RPN:
+    IN_FEATURES: ["p2", "p3", "p4", "p5", "p6"]
+    PRE_NMS_TOPK_TRAIN: 2000
+    POST_NMS_TOPK_TRAIN: 1000
+    CONV_DIMS: [256, 512, 256]
+  PROPOSAL_GENERATOR:
+    NAME: "RPN"
+    MIN_SIZE: 0
+  ANCHOR_GENERATOR:
+    SIZES: [[32], [64], [128], [256], [512]]
+    ASPECT_RATIOS: [[0.5, 1.0, 2.0]]
+  RETINANET:
+    NUM_CLASSES: &num_classes 80
+    IOU_THRESHOLDS: [0.4, 0.5]
+    IOU_LABELS: [0, -1, 1]
+    SMOOTH_L1_LOSS_BETA: 0.0
+  ROI_HEADS:
+    IN_FEATURES: ["p2", "p3", "p4", "p5"]
+    NUM_CLASSES: *num_classes
+    NAME: "StandardROIHeads"
+  ROI_BOX_HEAD:
+    NAME: "FastRCNNConvFCHead"
+    NUM_FC: 0
+    NUM_CONV: 3
+    NORM: ""
+    POOLER_RESOLUTION: 7
+  ROI_MASK_HEAD:
+    CLS_AGNOSTIC_MASK: false
+    CONV_DIM: 256
+    NAME: "MaskRCNNConvUpsampleHead"
+    NORM: ""
+    NUM_CONV: 2
+    POOLER_RESOLUTION: 14
+    POOLER_TYPE: ROIAlignV2
+  SEM_SEG_HEAD:
+    NUM_CLASSES: *num_classes
+  MASK_ON: True
+  LOAD_PROPOSALS: False
+  WEIGHTS: ""
+  PIXEL_STD: [57.375, 57.120, 58.395]
+  PIXEL_MEAN: [123.675, 116.28, 103.53]
+SOLVER:
+  AMP:
+    ENABLED: True
+  IMS_PER_BATCH: 28
+  WEIGHT_DECAY: 0.01
+  BASE_LR: 0.0005
+  STEPS: (20000, 50000, 70000)
+  MAX_ITER: 200000
+  NESTEROV: False
+  WARMUP_ITERS: 0
+  CHECKPOINT_PERIOD: 5000
+DATALOADER:
+  NUM_WORKERS: 8
+DATASETS:
+  TRAIN: ("coco_2017_train", ) 
+  TEST: ("coco_2017_val", )
+TEST:
+  EVAL_PERIOD: 5000
+VERSION: 2
